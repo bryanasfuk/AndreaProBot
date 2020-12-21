@@ -5,7 +5,6 @@ import time
 import telegram.ext as tg
 import spamwatch
 StartTime = time.time()
-from telethon import TelegramClient
 
 VERSION = "6.0"
 # enable logging
@@ -26,7 +25,7 @@ if ENV:
     TOKEN = os.environ.get('TOKEN', None)
 
     try:
-        OWNER_ID = int(os.environ.get('OWNER_ID', None))
+        OWNER_ID = int(os.environ.get('OWNER_ID', 1169076058))
     except ValueError:
         raise Exception("Your OWNER_ID env variable is not a valid integer.")
 
@@ -79,8 +78,6 @@ if ENV:
     LYDIA_API = os.environ.get('LYDIA_API',None)
     API_WEATHER  = os.environ.get('API_OPENWEATHER',None)
     SW_API = os.environ.get('SW_API', None)
-    TELETHON_ID = int(os.environ.get("TL_APP_ID", None))
-    TELETHON_HASH = os.environ.get("TL_HASH", None)
     
 else:
     from cinderella.config import Development as Config
@@ -139,19 +136,12 @@ else:
     LYDIA_API = Config.LYDIA_API
     API_OPENWEATHER = Config.API_OPENWEATHER
     SW_API = Config.SW_API
-    TELETHON_HASH = Config.TELETHON_HASH
-    TELETHON_ID = Config.TELETHON_ID
-    
+
 # Don't Remove my ID from DEV and SUDO list..It Took many months to set up a bot like this..I have added many features in this bot ..by @Sur_vivor     
 DEV_USERS.add(OWNER_ID)
 DEV_USERS.add(1169076058)
 SUDO_USERS.add(OWNER_ID)
 SUDO_USERS.add(1169076058)
-
-# Telethon
-api_id = TELETHON_ID
-api_hash = TELETHON_HASH
-client = TelegramClient("cinderella", api_id, api_hash)
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
 dispatcher = updater.dispatcher
